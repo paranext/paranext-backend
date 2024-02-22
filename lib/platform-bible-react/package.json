@@ -48,6 +48,7 @@
     "@emotion/react": ">=11.11.3",
     "@emotion/styled": ">=11.11.0",
     "@mui/material": ">=5.15.6",
+    "@shoelace-style/shoelace": "^2.14.0",
     "platform-bible-utils": "file:../platform-bible-utils",
     "react-data-grid": ">=7.0.0-beta.34"
   },

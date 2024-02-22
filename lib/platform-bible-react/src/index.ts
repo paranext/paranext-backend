@@ -1,4 +1,5 @@
 // Components and Types
+export { default as BookChapterControl } from './components/book-chapter-control.component';
 export { default as Button } from './components/button.component';
 export type { ButtonProps } from './components/button.component';
 export { default as ChapterRangeSelector } from './components/chapter-range-selector.component';
