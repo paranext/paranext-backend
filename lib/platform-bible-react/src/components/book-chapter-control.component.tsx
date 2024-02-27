@@ -1,109 +1,102 @@
-import './book-chapter-control.component.css';
 import {
   SlInput,
   SlIcon,
   SlMenu,
-  SlMenuItem,
   SlMenuLabel,
   SlDivider,
+  SlDetails,
 } from '@shoelace-style/shoelace/dist/react';
+import { Canon } from '@sillsdev/scripture';
+// import { useState } from 'react';
+import { getChaptersForBook } from 'platform-bible-utils';
+import { useState } from 'react';
+import BookMenuItem from './book-menu-item.component';
+import './book-chapter-control.component.css';
 import ChapterSelect from './chapter-select.component';
 
+// function BookDetails(bookId: string) {
+//   return (
+//     <SlDetails summary="Chapters">
+//       <ChapterSelect endChapter={getChaptersForBook(Canon.bookIdToNumber(bookId))} />
+//     </SlDetails>
+//   );
+// }
+
 function BookChapterControl() {
+  const { allBookIds } = Canon;
+  const oldTestamentIds: string[] = allBookIds.filter((bookId) => Canon.isBookOT(bookId));
+  // const newTestamentIds: string[] = allBookIds.filter((bookId) => Canon.isBookNT(bookId));
+  // const deuteroCanonIds: string[] = allBookIds.filter((bookId) => Canon.isBookDC(bookId));
+
+  const [selectedBook, setSelectedBook] = useState<string>('');
+
+  const handleMenuItemClick = (bookId: string) => {
+    setSelectedBook(bookId);
+  };
+
   return (
     <div className="book-chapter-control">
       <SlInput placeholder="Deuteronomy 4:7" size="small">
         <SlIcon name="search" slot="prefix" />
         <SlIcon name="clock-history" slot="suffix" />
       </SlInput>
+
       <SlMenu className="menu">
-        <SlMenuItem className="selected-menu-item">
-          Deuteronomy
-          <SlIcon slot="suffix" name="pin" />
-        </SlMenuItem>
         <SlMenuLabel>Old Testament</SlMenuLabel>
-        <SlMenuItem value="gen">
-          Genesis
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
-        <SlMenuItem value="exo">
-          Exodus
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
-        <SlMenuItem value="lev">
-          Leviticus
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
-        <SlMenuItem value="num">
-          Number
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
-        <SlMenuItem value="deu" className="selected-menu-item">
-          Deuteronomy
-          <div className="book-color-label" slot="prefix" />
-          <SlIcon slot="suffix" name="chevron-up" />
-        </SlMenuItem>
-        {/* <sl-details summary="Chapters"> */}
-        <ChapterSelect endChapter={34} />
-        {/* </sl-details> */}
-        <SlMenuItem value="jos">
-          Joshua
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
-        <SlMenuItem value="jud">
-          Judges
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
+        {oldTestamentIds.map((bookId) => (
+          <BookMenuItem
+            key={bookId}
+            bookId={bookId}
+            handleSelect={() => handleMenuItemClick(bookId)}
+            isSelected={selectedBook === bookId}
+          >
+            {selectedBook === bookId ? (
+              <div className="selected-book-details">
+                <SlDetails summary={Canon.bookIdToEnglishName(selectedBook)}>
+                  <ChapterSelect
+                    endChapter={getChaptersForBook(Canon.bookIdToNumber(selectedBook))}
+                  />
+                </SlDetails>
+              </div>
+            ) : undefined}
+          </BookMenuItem>
+        ))}
         <SlDivider />
-        <SlMenuLabel>Deuterocanon</SlMenuLabel>
-        <SlMenuItem value="es1" disabled>
-          1 Esdras
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
-        <SlMenuItem value="es2" disabled>
-          2 Esdras
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
-        <SlMenuItem value="mc1" disabled>
-          1 Maccabees
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
-        <SlMenuItem value="mc2" disabled>
-          2 Maccabees
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
+
+        {/* <SlMenuLabel>Deuterocanon</SlMenuLabel>
+        {deuteroCanonIds.map((bookId) => (
+          <BookMenuItem
+            key={bookId}
+            bookId={bookId}
+            handleSelect={() => handleSelect(bookId)}
+            isSelected={selectedBook === bookId}
+          />
+        ))}
         <SlDivider />
+
         <SlMenuLabel>New Testament</SlMenuLabel>
-        <SlMenuItem value="mat">
-          Matthew
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
-        <SlMenuItem value="mrk">
-          Mark
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
-        <SlMenuItem value="luk">
-          Luke
-          <div className="book-color-label" slot="prefix" />
-        </SlMenuItem>
+        {newTestamentIds.map((bookId) => (
+          <BookMenuItem
+            key={bookId}
+            bookId={bookId}
+            handleSelect={() => handleSelect(bookId)}
+            isSelected={selectedBook === bookId}
+          />
+        ))} */}
+
+        {/* {selectedBook && (
+          <div className="selected-book-details">
+            <SlDetails summary={Canon.bookIdToEnglishName(selectedBook)}>
+              <ChapterSelect endChapter={getChaptersForBook(Canon.bookIdToNumber(selectedBook))} />
+            </SlDetails>
+          </div>
+        )} */}
       </SlMenu>
     </div>
   );
 }
 
 export default BookChapterControl;
-
-/**
- * Smaller components within this one:
- *
- * Chapter Select - Grid of chapter numbers
- *
- * Input Dropdown
- *
- * Menu
- *
- * Menu items - Selected and non-selected
- */
 
 /**
  * Things to look into more:
@@ -119,7 +112,8 @@ export default BookChapterControl;
 /**
  * TODO: Why shoelace figma is different than others
  *
- * TODO: Icons copied to local dist
+ * TODO: Icons copied to local dist- icons won't display even when copied- content security policy?
+ * and 404
  *
  * TODO: Set base path, where to do it
  *
