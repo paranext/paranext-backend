@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -90,6 +90,8 @@
         WARNING: This is experimental and does not work as of July 2023! It is here for future
         compatibility in case they add support for it
     -->
+    <!--TODO: Make sure to remove data: from img-src before merging to main!!! Only here
+    for Shoelace experiment during UI Toolkit Bake Off-->
     <meta
       http-equiv="Content-Security-Policy"
       content="
@@ -100,7 +102,7 @@
         object-src 'none';
         worker-src 'self';
         manifest-src 'self';
-        connect-src 'self' https: ws:;
+        connect-src 'self' https: ws: data:;
         img-src 'self' papi-extension: https: data:;
         media-src 'self' papi-extension: https: data:;
         font-src 'self' papi-extension: https: data:;
