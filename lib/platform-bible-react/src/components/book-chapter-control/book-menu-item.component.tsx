@@ -3,29 +3,25 @@ import { Canon } from '@sillsdev/scripture';
 import './book-menu-item.component.css';
 import { PropsWithChildren } from 'react';
 
+// TODO: Make drawer a separate component?
+
 type BookMenuItemProps = PropsWithChildren<{
   // String id of book
   bookId: string;
-  handleSelect: (bookId: string) => void;
+  // Callback to run when a book menu item is selected
+  handleSelectBook: (bookId: string) => void;
+  // True if this menu item is currently selected
   isSelected: boolean;
 }>;
 
-function BookMenuItem({ bookId, handleSelect, isSelected, children }: BookMenuItemProps) {
-  // const [selectedBook, setSelectedBook] = useState('');
-
-  // const handleSelect = (currentBookId: string) => {
-  //   setSelectedBook(currentBookId);
-  // };
-
-  // {selectedBook === bookId ? 'selected-menu-item' : 'menu-item'}
-
+function BookMenuItem({ bookId, handleSelectBook, isSelected, children }: BookMenuItemProps) {
   return (
     <div>
       <SlMenuItem
         key={bookId}
         value={bookId}
-        className="menu-item"
-        onClick={() => handleSelect(bookId)}
+        className={isSelected ? 'selected-menu-item' : 'menu-item'}
+        onClick={() => handleSelectBook(bookId)}
       >
         {Canon.bookIdToEnglishName(bookId)}
         {isSelected ? (
@@ -34,7 +30,7 @@ function BookMenuItem({ bookId, handleSelect, isSelected, children }: BookMenuIt
           <div className="book-color-label" slot="prefix" />
         )}
       </SlMenuItem>
-      {children}
+      {isSelected && children}
     </div>
   );
 }

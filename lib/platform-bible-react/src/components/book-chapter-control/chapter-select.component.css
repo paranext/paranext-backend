@@ -1,5 +1,12 @@
 @import '@shoelace-style/shoelace/dist/themes/light.css';
 
+body {
+  font: 14px var(--sl-font-sans);
+  background-color: var(--sl-color-neutral-0);
+  color: var(--sl-color-neutral-900);
+  padding: 1rem;
+}
+
 .chapter-select {
   display: flex;
   padding: 0 8px 0 24px;

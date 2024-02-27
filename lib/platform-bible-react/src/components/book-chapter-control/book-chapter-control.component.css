@@ -1,0 +1,22 @@
+@import '@shoelace-style/shoelace/dist/themes/light.css';
+
+body {
+  font: 14px var(--sl-font-sans);
+  background-color: var(--sl-color-neutral-0);
+  color: var(--sl-color-neutral-900);
+  padding: 1rem;
+}
+
+.book-chapter-control {
+  max-width: 250px; /* From UX sandbox */
+  padding-top: 0; /* From UX sandbox */
+}
+
+.book-chapter-menu {
+  height: 500px; /* Will be removed or set to UX specified size, helpful for testing */
+  overflow-y: auto; /* Adds scroll once it exceeds 500px */
+}
+
+.menu-item-container {
+  position: relative;
+}
