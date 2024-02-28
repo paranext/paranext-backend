@@ -1,7 +1,6 @@
 import { SlInput, SlIcon } from '@shoelace-style/shoelace/dist/react';
 import SlInputElement from '@shoelace-style/shoelace/dist/components/input/input';
-
-// TODO: Book chapter input searches chapter too?
+import './book-chapter-input.component.css';
 
 export type BookChapterInputProps = {
   handleSearch: (searchString: string) => void;
@@ -18,6 +17,7 @@ function BookChapterInput({
 }: BookChapterInputProps) {
   return (
     <SlInput
+      className="book-chapter-input"
       placeholder={placeholder}
       size="small"
       type="text"

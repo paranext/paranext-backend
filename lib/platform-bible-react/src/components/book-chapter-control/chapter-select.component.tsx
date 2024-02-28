@@ -1,6 +1,6 @@
 import './chapter-select.component.css';
 
-// TODO: active prop- selected chapter stays highlighted
+// todo active prop- selected chapter stays highlighted
 
 export type ChapterSelectProps = {
   // The end chapter of the selected book

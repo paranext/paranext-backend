@@ -3,8 +3,6 @@ import { Canon } from '@sillsdev/scripture';
 import './book-menu-item.component.css';
 import { PropsWithChildren } from 'react';
 
-// TODO: Make drawer a separate component?
-
 type BookMenuItemProps = PropsWithChildren<{
   // String id of book
   bookId: string;
@@ -12,6 +10,8 @@ type BookMenuItemProps = PropsWithChildren<{
   handleSelectBook: (bookId: string) => void;
   // True if this menu item is currently selected
   isSelected: boolean;
+  // True if the book associated with this menu item has chapters
+  // hasChapters: boolean;
 }>;
 
 function BookMenuItem({ bookId, handleSelectBook, isSelected, children }: BookMenuItemProps) {

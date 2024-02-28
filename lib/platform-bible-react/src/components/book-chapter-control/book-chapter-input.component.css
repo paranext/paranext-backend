@@ -1,0 +1,12 @@
+.book-chapter-input {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0;
+
+  position: relative;
+  width: 552px;
+  height: 56px;
+  left: 34.15px;
+  top: 85px;
+}
