@@ -1,12 +1,3 @@
-@import '@shoelace-style/shoelace/dist/themes/light.css';
-
-body {
-  font: 14px var(--sl-font-sans);
-  background-color: var(--sl-color-neutral-0);
-  color: var(--sl-color-neutral-900);
-  padding: 1rem;
-}
-
 .chapter-select {
   display: flex;
   padding: 0 8px 0 24px;
@@ -14,7 +5,7 @@ body {
   align-content: flex-start;
   align-self: stretch;
   flex-wrap: wrap;
-  background: var(--sl-color-neutral-50, #F9F9F9);
+  background: var(--neutral-50, #f9f9f9);
 
   > div {
     display: flex;
@@ -28,7 +19,7 @@ body {
 
   .active {
     border-radius: 4px;
-    background: var(--sl-color-amber-100, #FEF3C7);
+    background: var(--sl-color-amber-100, #fef3c7);
   }
 
   :hover {

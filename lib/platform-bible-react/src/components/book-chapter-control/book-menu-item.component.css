@@ -1,11 +1,15 @@
-/* sl-menu-item::part(label) {
+sl-menu-item::part(label) {
   font-size: 14px;
+}
+
+.selected-menu-item {
+  background: var(--neutral-50, #f9f9f9);
 }
 
 sl-menu-item::part(prefix) {
   margin-right: 24px;
   margin-left: -24px;
-} */
+}
 
 .book-color-label {
   background-color: var(--sl-color-amber-100);
@@ -17,12 +21,4 @@ sl-menu-item::part(prefix) {
   background-color: var(--sl-color-amber-600);
   height: 16px;
   width: 2px;
-}
-
-.selected-menu-item {
-  background-color: var(--sl-color-neutral-200);
-}
-
-.chapter-drawer {
-  display: block;
 }

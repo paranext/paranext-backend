@@ -1,4 +1,4 @@
-import { SlMenu, SlMenuLabel } from '@shoelace-style/shoelace/dist/react';
+import { SlDivider, SlMenu, SlMenuLabel } from '@shoelace-style/shoelace/dist/react';
 import { Canon } from '@sillsdev/scripture';
 import { useCallback, useState } from 'react';
 import { ScriptureReference, getChaptersForBook } from 'platform-bible-utils';
@@ -13,13 +13,16 @@ import ChapterSelect from './chapter-select.component';
 // ? Book label colors- "indicates section or genre" changes per bookType and gets darker when selected, disabled sections have no colors
 // ? What order should books be in- OT, DC, NT like mockup?
 // ? Book chapter input searches chapter too?
+// ? Pin functionality- pinning a menu item vs pinning the tab
 
-// todo Pin functionality, pin icon
-// todo Arrow down icon when menu item is clicked
+// todo Pin menu item (book) functionality- should add a pinned book list above the old testament section
 // todo Ability to disable a section (deuterocanon), or disable one book
-// todo Go through all css and make it match Figma- not sandbox
 // todo placeholder cannot be hardcoded- if book has no chapters or verses than it should just display book name
 // todo menu should float instead of increasing height of toolbar
+// todo add genre or bookType prop to BookMenuItem and coordinate color labels to it
+// todo clicking book closes chapters
+// todo "show to" button current book is outside view
+// todo css for BookChapterInput
 
 type BookChapterControlProps = {
   scrRef: ScriptureReference;
@@ -68,18 +71,19 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
   );
 
   const fetchEndChapter = useCallback((bookId: string) => {
-    // getChaptersForBook returns -1 if not found in scrBookData, scrBookData only includes OT and NT
+    // getChaptersForBook returns -1 if not found in scrBookData
+    // scrBookData only includes OT and NT, so all DC will return -1
     return getChaptersForBook(Canon.bookIdToNumber(bookId));
   }, []);
 
   const handleSelectBook = (bookId: string) => {
     setSelectedBookId(bookId);
-    // If no chapters for that book- chapter and verse num should be 0?
     handleSubmit({
       bookNum: Canon.bookIdToNumber(bookId),
       chapterNum: 1,
       verseNum: 1,
     });
+    // If there are no chapters, then selecting the book will close the menu
     if (fetchEndChapter(bookId) === -1) setMenuOpen(false);
   };
 
@@ -101,7 +105,7 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
   };
 
   return (
-    <div className="book-chapter-control">
+    <>
       <BookChapterInput
         value={searchQuery}
         handleSearch={handleSearchInput}
@@ -109,33 +113,35 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
         placeholder={`${Canon.bookNumberToEnglishName(scrRef.bookNum)} ${scrRef.chapterNum}:${scrRef.verseNum}`}
       />
 
-      {isMenuOpen && (
-        <SlMenu className="book-chapter-menu">
-          {bookTypeArray.map((bookType) => (
-            <div key={bookType}>
-              <SlMenuLabel>{bookTypeLabels[bookType]}</SlMenuLabel>
-              {fetchFilteredBooks(bookType).map((bookId) => (
-                <div key={bookId} className="menu-item-container">
-                  <BookMenuItem
-                    key={bookId}
-                    bookId={bookId}
-                    handleSelectBook={() => handleSelectBook(bookId)}
-                    isSelected={selectedBookId === bookId}
-                  >
-                    <div className="chapter-drawer">
+      <div className="book-chapter-control">
+        {isMenuOpen && (
+          <SlMenu>
+            {bookTypeArray.map((bookType) => (
+              <div key={bookType}>
+                <SlMenuLabel>{bookTypeLabels[bookType]}</SlMenuLabel>
+                {fetchFilteredBooks(bookType).map((bookId) => (
+                  <div key={bookId}>
+                    <BookMenuItem
+                      key={bookId}
+                      bookId={bookId}
+                      handleSelectBook={() => handleSelectBook(bookId)}
+                      isSelected={selectedBookId === bookId}
+                    >
                       <ChapterSelect
                         handleSelectChapter={handleSelectChapter}
                         endChapter={fetchEndChapter(bookId)}
                       />
-                    </div>
-                  </BookMenuItem>
-                </div>
-              ))}
-            </div>
-          ))}
-        </SlMenu>
-      )}
-    </div>
+                    </BookMenuItem>
+                  </div>
+                ))}
+                {/* We know this is right because the order of bookTypes will not change */}
+                {bookType === 'OT' || bookType === 'NT' ? <SlDivider /> : undefined}
+              </div>
+            ))}
+          </SlMenu>
+        )}
+      </div>
+    </>
   );
 }
 

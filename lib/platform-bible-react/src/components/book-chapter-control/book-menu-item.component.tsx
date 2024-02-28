@@ -1,4 +1,4 @@
-import { SlMenuItem } from '@shoelace-style/shoelace/dist/react';
+import { SlIcon, SlMenuItem } from '@shoelace-style/shoelace/dist/react';
 import { Canon } from '@sillsdev/scripture';
 import './book-menu-item.component.css';
 import { PropsWithChildren } from 'react';
@@ -10,8 +10,7 @@ type BookMenuItemProps = PropsWithChildren<{
   handleSelectBook: (bookId: string) => void;
   // True if this menu item is currently selected
   isSelected: boolean;
-  // True if the book associated with this menu item has chapters
-  // hasChapters: boolean;
+  // todo bookType or genre- will coordinate the color of book-color-label
 }>;
 
 function BookMenuItem({ bookId, handleSelectBook, isSelected, children }: BookMenuItemProps) {
@@ -25,7 +24,10 @@ function BookMenuItem({ bookId, handleSelectBook, isSelected, children }: BookMe
       >
         {Canon.bookIdToEnglishName(bookId)}
         {isSelected ? (
-          <div className="selected-book-color-label" slot="prefix" />
+          <>
+            <div className="selected-book-color-label" slot="prefix" />
+            <SlIcon name="chevron-up" slot="suffix" />
+          </>
         ) : (
           <div className="book-color-label" slot="prefix" />
         )}
