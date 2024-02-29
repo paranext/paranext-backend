@@ -12,13 +12,35 @@ sl-menu-item::part(prefix) {
 }
 
 .book-color-label {
-  background-color: var(--sl-color-amber-100);
   height: 16px;
   width: 2px;
 }
 
 .selected-book-color-label {
-  background-color: var(--sl-color-amber-600);
   height: 16px;
   width: 2px;
+}
+
+.book-color-label.ot {
+  background-color: var(--sl-color-amber-100);
+}
+
+.selected-book-color-label.ot {
+  background-color: var(--sl-color-amber-600);
+}
+
+.book-color-label.nt {
+  background-color: var(--sl-color-purple-100);
+}
+
+.selected-book-color-label.nt {
+  background-color: var(--sl-color-purple-600);
+}
+
+.book-color-label.dc {
+  background-color: var(--sl-color-indigo-100);
+}
+
+.selected-book-color-label.dc {
+  background-color: var(--sl-color-indigo-600);
 }

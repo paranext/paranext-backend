@@ -22,6 +22,8 @@ function BookChapterInput({
       size="small"
       type="text"
       value={value}
+      // From shoelace docs- "event.target will be a reference to the underlying custom element"
+      // Have to assert SlInputElement to use the value correctly
       // eslint-disable-next-line no-type-assertion/no-type-assertion
       onSlInput={(event) => handleSearch((event.target as SlInputElement).value)}
       onClick={handleClick}

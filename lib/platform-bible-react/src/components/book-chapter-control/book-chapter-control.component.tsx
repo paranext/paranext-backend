@@ -2,34 +2,30 @@ import { SlDivider, SlMenu, SlMenuLabel } from '@shoelace-style/shoelace/dist/re
 import { Canon } from '@sillsdev/scripture';
 import { useCallback, useState } from 'react';
 import { ScriptureReference, getChaptersForBook } from 'platform-bible-utils';
-import BookMenuItem from './book-menu-item.component';
+import BookMenuItem, { BookType } from './book-menu-item.component';
 import './book-chapter-control.component.css';
 import BookChapterInput from './book-chapter-input.component';
 import ChapterSelect from './chapter-select.component';
 
-// ? Should selecting outside of menu close the menu?
-// ? What to do with labels when no books match search in that category?
+// ? What to do with SlMenuLabel when no books match search in that category?
 // ? On select book- sets verseRef to selected book 1:1, should it only set on selecting chapters?
-// ? Book label colors- "indicates section or genre" changes per bookType and gets darker when selected, disabled sections have no colors
 // ? What order should books be in- OT, DC, NT like mockup?
-// ? Book chapter input searches chapter too?
+// ? Book chapter input should search for chapter too?
 // ? Pin functionality- pinning a menu item vs pinning the tab
+// ? When is menu supposed to close- currently closes on selecting a chapter or selecting a book that contains no chapters
+// ? Should selecting outside of menu close the menu?
 
 // todo Pin menu item (book) functionality- should add a pinned book list above the old testament section
-// todo Ability to disable a section (deuterocanon), or disable one book
+// todo Ability to disable a section (deuterocanon), or disable one book- when disabled no color label
 // todo placeholder cannot be hardcoded- if book has no chapters or verses than it should just display book name
-// todo menu should float instead of increasing height of toolbar
-// todo add genre or bookType prop to BookMenuItem and coordinate color labels to it
 // todo clicking book closes chapters
 // todo "show to" button current book is outside view
-// todo css for BookChapterInput
 
 type BookChapterControlProps = {
   scrRef: ScriptureReference;
   handleSubmit: (scrRef: ScriptureReference) => void;
 };
 
-type BookType = 'OT' | 'NT' | 'DC';
 type BookTypeLabels = {
   [bookType in BookType]: string;
 };
@@ -78,13 +74,15 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
 
   const handleSelectBook = (bookId: string) => {
     setSelectedBookId(bookId);
-    handleSubmit({
-      bookNum: Canon.bookIdToNumber(bookId),
-      chapterNum: 1,
-      verseNum: 1,
-    });
-    // If there are no chapters, then selecting the book will close the menu
-    if (fetchEndChapter(bookId) === -1) setMenuOpen(false);
+    // If there are no chapters, then selecting the book will submit book choice and close the menu
+    if (fetchEndChapter(bookId) === -1) {
+      handleSubmit({
+        bookNum: Canon.bookIdToNumber(bookId),
+        chapterNum: 1,
+        verseNum: 1,
+      });
+      setMenuOpen(false);
+    }
   };
 
   const handleSearchInput = (searchString: string) => {
@@ -113,7 +111,7 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
         placeholder={`${Canon.bookNumberToEnglishName(scrRef.bookNum)} ${scrRef.chapterNum}:${scrRef.verseNum}`}
       />
 
-      <div className="book-chapter-control">
+      <div className="book-chapter-menu">
         {isMenuOpen && (
           <SlMenu>
             {bookTypeArray.map((bookType) => (
@@ -126,10 +124,15 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
                       bookId={bookId}
                       handleSelectBook={() => handleSelectBook(bookId)}
                       isSelected={selectedBookId === bookId}
+                      bookType={bookType}
                     >
                       <ChapterSelect
                         handleSelectChapter={handleSelectChapter}
                         endChapter={fetchEndChapter(bookId)}
+                        // Without this condition- will highlight that chapterNum in every book- not just the selected book
+                        activeChapter={
+                          scrRef.bookNum === Canon.bookIdToNumber(bookId) ? scrRef.chapterNum : 0
+                        }
                       />
                     </BookMenuItem>
                   </div>
