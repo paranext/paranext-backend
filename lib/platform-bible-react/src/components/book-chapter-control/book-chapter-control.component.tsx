@@ -18,7 +18,6 @@ import ChapterSelect from './chapter-select.component';
 // todo Pin menu item (book) functionality- should add a pinned book list above the old testament section
 // todo Ability to disable a section (deuterocanon), or disable one book- when disabled no color label
 // todo placeholder cannot be hardcoded- if book has no chapters or verses than it should just display book name
-// todo clicking book closes chapters
 // todo "show to" button current book is outside view
 
 type BookChapterControlProps = {
@@ -73,8 +72,9 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
   }, []);
 
   const handleSelectBook = (bookId: string) => {
-    setSelectedBookId(bookId);
-    // If there are no chapters, then selecting the book will submit book choice and close the menu
+    setSelectedBookId(selectedBookId !== bookId ? bookId : '');
+    // If there are no chapters, then selecting the book will close the menu and set the
+    // chapter and verse numbers to 1
     if (fetchEndChapter(bookId) === -1) {
       handleSubmit({
         bookNum: Canon.bookIdToNumber(bookId),
@@ -113,7 +113,12 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
 
       <div className="book-chapter-menu">
         {isMenuOpen && (
-          <SlMenu>
+          <SlMenu
+            tabIndex={-1}
+            onBlur={() => {
+              setMenuOpen(false);
+            }}
+          >
             {bookTypeArray.map((bookType) => (
               <div key={bookType}>
                 <SlMenuLabel>{bookTypeLabels[bookType]}</SlMenuLabel>
