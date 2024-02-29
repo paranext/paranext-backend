@@ -8,16 +8,9 @@ body {
 }
 
 .book-chapter-menu {
-  display: flex;
+  max-width: 289px;
+  max-height: 500px;
+  overflow-y: auto;
   position: absolute;
   z-index: 1;
-  flex-direction: column;
-  max-width: 289px;
-  align-items: flex-start;
-  box-shadow: 0 2px 8px rgba(113, 113, 122, 0.12);
-  border-radius: 4px;
-  padding: 0 0 8px;
-  isolation: isolate;
-  max-height: 400px;
-  overflow-y: auto;
 }
