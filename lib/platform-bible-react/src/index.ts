@@ -3,8 +3,12 @@ import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path';
 
 setBasePath('https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.14.0/cdn/');
 
+export { default as MuiBookChapterControl } from './components/mui-book-chapter-control/mui-book-chapter-control.component';
+export type { MuiBookChapterControlProps } from './components/mui-book-chapter-control/mui-book-chapter-control.component';
+
 // Components and Types
 export { default as BookChapterControl } from './components/book-chapter-control/book-chapter-control.component';
+export type { BookChapterControlProps } from './components/book-chapter-control/book-chapter-control.component';
 export { default as Button } from './components/button.component';
 export type { ButtonProps } from './components/button.component';
 export { default as ChapterRangeSelector } from './components/chapter-range-selector.component';

@@ -20,7 +20,7 @@ import ChapterSelect from './chapter-select.component';
 // todo placeholder cannot be hardcoded- if book has no chapters or verses than it should just display book name
 // todo "show to" button current book is outside view
 
-type BookChapterControlProps = {
+export type BookChapterControlProps = {
   scrRef: ScriptureReference;
   handleSubmit: (scrRef: ScriptureReference) => void;
 };

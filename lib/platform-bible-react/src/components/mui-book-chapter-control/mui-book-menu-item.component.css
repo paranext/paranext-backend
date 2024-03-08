@@ -1,0 +1,46 @@
+/* sl-menu-item::part(label) {
+  font-size: 14px;
+} */
+
+.selected-menu-item {
+  background: #f9f9f9;
+}
+/*
+sl-menu-item::part(prefix) {
+  margin-right: 24px;
+  margin-left: -24px;
+} */
+
+.book-color-label {
+  height: 16px;
+  width: 2px;
+}
+
+.selected-book-color-label {
+  height: 16px;
+  width: 2px;
+}
+
+.book-color-label.ot {
+  background-color: orange;
+}
+
+.selected-book-color-label.ot {
+  background-color: darkorange;
+}
+
+.book-color-label.nt {
+  background-color: green;
+}
+
+.selected-book-color-label.nt {
+  background-color: darkgreen;
+}
+
+.book-color-label.dc {
+  background-color: blue;
+}
+
+.selected-book-color-label.dc {
+  background-color: darkblue;
+}

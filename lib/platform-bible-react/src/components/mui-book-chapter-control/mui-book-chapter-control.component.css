@@ -1,0 +1,15 @@
+body {
+  font-size: 14px;
+  font-family: Inter, sans-serif;
+  background-color: whitesmoke;
+  color: slategrey;
+  padding: 1rem;
+}
+
+.book-chapter-menu {
+  max-width: 289px;
+  max-height: 500px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 1;
+}

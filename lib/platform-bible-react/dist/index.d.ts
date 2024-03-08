@@ -33,6 +33,11 @@ export interface ScriptureReference {
 	chapterNum: number;
 	verseNum: number;
 }
+export type MuiBookChapterControlProps = {
+	scrRef: ScriptureReference;
+	handleSubmit: (scrRef: ScriptureReference) => void;
+};
+export declare function MuiBookChapterControl({ scrRef, handleSubmit }: MuiBookChapterControlProps): import("react/jsx-runtime").JSX.Element;
 export type BookChapterControlProps = {
 	scrRef: ScriptureReference;
 	handleSubmit: (scrRef: ScriptureReference) => void;
