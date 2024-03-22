@@ -1,4 +1,4 @@
-import { SlDivider, SlMenu, SlMenuLabel } from '@shoelace-style/shoelace/dist/react';
+import { SlDivider, SlMenu, SlMenuItem, SlMenuLabel } from '@shoelace-style/shoelace/dist/react';
 import { Canon } from '@sillsdev/scripture';
 import { useCallback, useState } from 'react';
 import { ScriptureReference, getChaptersForBook } from 'platform-bible-utils';
@@ -6,6 +6,7 @@ import BookMenuItem, { BookType } from './book-menu-item.component';
 import './book-chapter-control.component.css';
 import BookChapterInput from './book-chapter-input.component';
 import ChapterSelect from './chapter-select.component';
+import Slider from '../slider.component';
 
 // ? What to do with SlMenuLabel when no books match search in that category?
 // ? On select book- sets verseRef to selected book 1:1, should it only set on selecting chapters?
@@ -121,6 +122,7 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
           >
             {bookTypeArray.map((bookType) => (
               <div key={bookType}>
+                <SlMenuItem>Zoom <Slider /></SlMenuItem>
                 <SlMenuLabel>{bookTypeLabels[bookType]}</SlMenuLabel>
                 {fetchFilteredBooks(bookType).map((bookId) => (
                   <div key={bookId}>
