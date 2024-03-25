@@ -1,4 +1,12 @@
-import { SlDivider, SlMenu, SlMenuItem, SlMenuLabel } from '@shoelace-style/shoelace/dist/react';
+import {
+  SlButton,
+  SlDivider,
+  SlDropdown,
+  SlMenu,
+  SlMenuItem,
+  SlMenuLabel,
+  SlRange,
+} from '@shoelace-style/shoelace/dist/react';
 import { Canon } from '@sillsdev/scripture';
 import { useCallback, useState } from 'react';
 import { ScriptureReference, getChaptersForBook } from 'platform-bible-utils';
@@ -6,7 +14,6 @@ import BookMenuItem, { BookType } from './book-menu-item.component';
 import './book-chapter-control.component.css';
 import BookChapterInput from './book-chapter-input.component';
 import ChapterSelect from './chapter-select.component';
-import Slider from '../slider.component';
 
 // ? What to do with SlMenuLabel when no books match search in that category?
 // ? On select book- sets verseRef to selected book 1:1, should it only set on selecting chapters?
@@ -116,13 +123,36 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
         {isMenuOpen && (
           <SlMenu
             tabIndex={-1}
-            onBlur={() => {
-              setMenuOpen(false);
-            }}
+            // This is here so that when we click out of the menu it closes
+            // But it breaks the view dropdown
+            // onBlur={() => {
+            //   setMenuOpen(false);
+            // }}
           >
+            {/* Prevent default keeps the menu open when you click the menu item */}
+            <SlMenuItem onClick={(e) => e.preventDefault()} style={{ fontSize: '14px' }}>
+              Zoom
+              <span>50%</span>
+              <SlRange min={50} max={200} onSlChange={() => setMenuOpen(false)} />
+              <span>200%</span>
+            </SlMenuItem>
+            {/* Wasn't allowing us to go into the new submenu because of the onBlur commented out above */}
+            <SlMenuItem onClick={(e) => e.preventDefault()} style={{ fontSize: '14px' }}>
+              View
+              <SlDropdown>
+                <SlButton slot="trigger" caret>
+                  Publish
+                </SlButton>
+                {/* Can get the users selection from this */}
+                <SlMenu onSlSelect={() => setMenuOpen(false)}>
+                  <SlMenuItem>Publish</SlMenuItem>
+                  <SlMenuItem>Draft</SlMenuItem>
+                  <SlMenuItem>Reading</SlMenuItem>
+                </SlMenu>
+              </SlDropdown>
+            </SlMenuItem>
             {bookTypeArray.map((bookType) => (
               <div key={bookType}>
-                <SlMenuItem>Zoom <Slider /></SlMenuItem>
                 <SlMenuLabel>{bookTypeLabels[bookType]}</SlMenuLabel>
                 {fetchFilteredBooks(bookType).map((bookId) => (
                   <div key={bookId}>
