@@ -7,10 +7,18 @@ body {
   padding: 1rem;
 }
 
+/* Increased the width of the menu for the zoom and view items */
 .book-chapter-menu {
-  max-width: 289px;
+  width: 400px;
   max-height: 500px;
   overflow-y: auto;
   position: absolute;
   z-index: 1;
 }
+
+sl-range::part(base) {
+  --thumb-size: 12px;
+  --track-height: 4px;
+  width: 75px;
+}
+

@@ -1,11 +1,12 @@
 import {
-  SlButton,
   SlDivider,
-  SlDropdown,
+  SlIcon,
   SlMenu,
   SlMenuItem,
   SlMenuLabel,
+  SlOption,
   SlRange,
+  SlSelect,
 } from '@shoelace-style/shoelace/dist/react';
 import { Canon } from '@sillsdev/scripture';
 import { useCallback, useState } from 'react';
@@ -125,31 +126,58 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
             tabIndex={-1}
             // This is here so that when we click out of the menu it closes
             // But it breaks the view dropdown
-            // onBlur={() => {
-            //   setMenuOpen(false);
-            // }}
+            onBlur={() => {
+              setMenuOpen(false);
+            }}
           >
             {/* Prevent default keeps the menu open when you click the menu item */}
             <SlMenuItem onClick={(e) => e.preventDefault()} style={{ fontSize: '14px' }}>
+              <SlIcon name="zoom-in" slot="prefix" />
               Zoom
-              <span>50%</span>
-              <SlRange min={50} max={200} onSlChange={() => setMenuOpen(false)} />
-              <span>200%</span>
+              <div slot="suffix" style={{ display: 'flex', alignItems: 'center' }}>
+                <span
+                  style={{
+                    fontFamily: 'Bloom Show Inv',
+                    fontSize: '14px',
+                    lineHeight: '16px',
+                    color: '#71717A',
+                  }}
+                >
+                  50%
+                </span>
+                <SlRange min={50} max={200} /> {/* onSlChange={() => setMenuOpen(false)} */}
+                <span
+                  style={{
+                    fontFamily: 'Bloom Show Inv',
+                    fontSize: '14px',
+                    lineHeight: '16px',
+                    color: '#71717A',
+                  }}
+                >
+                  200%
+                </span>
+              </div>
             </SlMenuItem>
-            {/* Wasn't allowing us to go into the new submenu because of the onBlur commented out above */}
+            {/* Doesn't allow us to switch into the new menu even with the onBlur commented out */}
             <SlMenuItem onClick={(e) => e.preventDefault()} style={{ fontSize: '14px' }}>
+              <SlIcon name="view-list" slot="prefix" />
               View
-              <SlDropdown>
+              <SlSelect slot="suffix" placeholder="Publish" onSlInput={() => setMenuOpen(false)}>
+                <SlOption>Publish</SlOption>
+                <SlOption>Draft</SlOption>
+                <SlOption>Reading</SlOption>
+              </SlSelect>
+              {/* Wasn't allowing us to go into the new submenu because of the onBlur commented out above */}
+              {/* <SlDropdown>
                 <SlButton slot="trigger" caret>
                   Publish
                 </SlButton>
-                {/* Can get the users selection from this */}
                 <SlMenu onSlSelect={() => setMenuOpen(false)}>
                   <SlMenuItem>Publish</SlMenuItem>
                   <SlMenuItem>Draft</SlMenuItem>
                   <SlMenuItem>Reading</SlMenuItem>
                 </SlMenu>
-              </SlDropdown>
+              </SlDropdown> */}
             </SlMenuItem>
             {bookTypeArray.map((bookType) => (
               <div key={bookType}>
