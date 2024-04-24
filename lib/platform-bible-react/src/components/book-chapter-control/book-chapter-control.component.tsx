@@ -332,7 +332,7 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
             handleBookmarks={() => console.log('bookmarks')}
           />
           {BOOK_TYPE_ARRAY.map(
-            (bookType) =>
+            (bookType, bookTypeIndex) =>
               fetchFilteredBooks(bookType).length > 0 && (
                 <div key={bookType}>
                   <ShadDropdownMenuLabel className="pr-font-semibold pr-text-slate-700">
@@ -366,8 +366,7 @@ function BookChapterControl({ scrRef, handleSubmit }: BookChapterControlProps) {
                       </BookMenuItem>
                     </div>
                   ))}
-                  {/* We know this is right because the order of bookTypes will not change */}
-                  {bookType === 'OT' || bookType === 'NT' ? (
+                  {BOOK_TYPE_ARRAY.length - 1 !== bookTypeIndex ? (
                     <ShadDropdownMenuSeparator />
                   ) : undefined}
                 </div>
