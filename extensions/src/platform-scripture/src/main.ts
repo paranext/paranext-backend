@@ -143,6 +143,10 @@ export async function activate(context: ExecutionActivationContext) {
     '%webView_configureChecks_title%',
   );
 
+  const showAboutDialogPromise = papi.commands.registerCommand('platform.about', async () =>
+    papi.dialogs.showAboutDialog(),
+  );
+
   const includeProjectsCommandPromise = papi.commands.registerCommand(
     'platformScripture.toggleIncludeMyParatext9Projects',
     async (shouldInclude) => {
@@ -220,6 +224,7 @@ export async function activate(context: ExecutionActivationContext) {
   await checkAggregatorService.initialize();
 
   context.registrations.add(
+    await showAboutDialogPromise,
     await scriptureExtenderPdpefPromise,
     await includeProjectsCommandPromise,
     await includeProjectsValidatorPromise,
