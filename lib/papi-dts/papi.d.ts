@@ -1260,6 +1260,8 @@ declare module 'main/services/server-network-connector.service' {
     RequestRouter,
   } from 'shared/data/internal-connection.model';
   import INetworkConnector from 'shared/services/network-connector.interface';
+  import { Server } from 'rpc-websockets';
+  export const server: Server;
   /** Handles the endpoint and connections from the server to the clients */
   export default class ServerNetworkConnector implements INetworkConnector {
     connectorInfo: NetworkConnectorInfo;

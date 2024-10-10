@@ -13,7 +13,10 @@
     "postinstall": "npm run rebuild && npm run link-modules",
     "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.ts"
   },
-  "dependencies": {},
+  "dependencies": {
+    "rpc-websockets": "^9.0.4",
+    "ws": "^8.18.0"
+  },
   "volta": {
     "extends": "../../package.json"
   }

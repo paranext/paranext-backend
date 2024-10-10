@@ -32,6 +32,17 @@ import {
   WebSocketResponse,
   WEBSOCKET_PORT,
 } from '@shared/data/network-connector.model';
+import { Server } from 'rpc-websockets';
+
+export const server = new Server({
+  port: 8080,
+  host: 'localhost',
+});
+
+server.register('sum', (params, socketId) => {
+  logger.warn(`adding ${JSON.stringify(params)} from ${socketId}`);
+  return params[0] + params[1];
+});
 
 // #region local variables
 

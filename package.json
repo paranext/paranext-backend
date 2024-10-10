@@ -71,7 +71,7 @@
     "lint:config": "cross-env NODE_ENV=development eslint --print-config .eslintrc.js > .eslintConfig.json",
     "lint:staged": "npm run build:types && lint-staged -q && cd lib/papi-dts && npm run lint:staged && cd ../../extensions && npm run lint:staged",
     "ncu:group": "npx npm-check-updates --interactive --format group",
-    "package": "tsx ./.erb/scripts/clean.js dist && npm run build && npm run build:extensions:production && electron-builder build --publish never && npm run build:dll",
+    "package": "tsx ./.erb/scripts/clean.js dist && npm run prestart && npm run build && npm run build:extensions:production && electron-builder build --publish never && npm run build:dll",
     "package:debug": "cross-env DEBUG_PROD=true npm run package",
     "postinstall": "patch-package && tsx .erb/scripts/check-native-dep.js && electron-builder install-app-deps && npm run build:dll && cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
     "prepare": "husky install && npm run csharp:tool:restore",
@@ -121,8 +121,7 @@
     "react": "^18.3.1",
     "react-data-grid": "^7.0.0-beta.42",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2",
-    "ws": "^8.18.0"
+    "react-router-dom": "^6.26.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.25.7",
@@ -192,6 +191,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^15.2.10",
     "mini-css-extract-plugin": "^2.9.1",
+    "node-abi": "^3.68.0",
     "node-loader": "^2.0.0",
     "nodemon": "^3.1.7",
     "patch-package": "^8.0.0",
@@ -200,6 +200,7 @@
     "react-refresh": "^0.14.2",
     "react-test-renderer": "^18.3.1",
     "rimraf": "^6.0.1",
+    "rpc-websockets": "^9.0.4",
     "run-script-os": "^1.1.6",
     "sass": "^1.79.4",
     "sass-loader": "^16.0.2",
@@ -224,6 +225,7 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0",
     "webpack-merge": "^6.0.1",
+    "ws": "^8.18.0",
     "yalc": "^1.0.0-pre.53"
   },
   "devEngines": {

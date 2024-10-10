@@ -15,6 +15,7 @@ import { initialize as initializeSettingsService } from '@extension-host/service
 import { startProjectSettingsService } from '@extension-host/services/project-settings.service-host';
 import { initialize as initializeLocalizationService } from '@extension-host/services/localization.service-host';
 import { gracefulShutdownMessage } from '@node/models/interprocess-messages.model';
+import { Client } from 'rpc-websockets';
 import { killChildProcessesFromExtensions } from './services/create-process.service';
 
 logger.info(
@@ -33,6 +34,12 @@ process.on('message', (message) => {
 // Try to kill child processes that extensions created
 process.on('exit', () => {
   killChildProcessesFromExtensions();
+});
+
+const client = new Client('ws://localhost:8080');
+client.on('open', async () => {
+  const result = await client.call('sum', [3, 6]);
+  logger.warn(`SUM IS ${result}`);
 });
 
 // #region Services setup
